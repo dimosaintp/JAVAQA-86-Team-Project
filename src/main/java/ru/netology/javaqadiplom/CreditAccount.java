@@ -37,6 +37,7 @@ public class CreditAccount extends Account {
      * @param amount - сумма покупки
      * @return true если операция прошла успешно, false иначе.
      */
+
     @Override
     public boolean pay(int amount) {
         if (amount <= 0) {
