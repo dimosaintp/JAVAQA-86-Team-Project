@@ -5,19 +5,11 @@ import org.junit.jupiter.api.Test;
 
 public class CreditAccountTest {
 
-    @Test
-    public void shouldAddToPositiveBalance() {
-        CreditAccount account = new CreditAccount(
-                0,
-                5_000,
-                15
-        );
+    /*
+    Конструктор CreditAccount
+    */
 
-        account.add(3_000);
-
-        Assertions.assertEquals(3_000, account.getBalance());
-    }
-
+    // Должно выкидываться исключение при создании счета с отрицательным балансом.
     @Test
     public void shouldShowExceptionWhenInitialBalanceIsNegative() throws IllegalArgumentException {
         Assertions.assertThrows(IllegalArgumentException.class, () -> {
@@ -29,6 +21,7 @@ public class CreditAccountTest {
         });
     }
 
+    // Должно выкидываться исключение при создании счета с отрицательным кредитным лимитом.
     @Test
     public void shouldShowExceptionWhenCreditLimitIsNegative() throws IllegalArgumentException {
         Assertions.assertThrows(IllegalArgumentException.class, () -> {
@@ -40,6 +33,7 @@ public class CreditAccountTest {
         });
     }
 
+    // Должно выкидываться исключение при создании счета с отрицательной ставкой.
     @Test
     public void shouldShowExceptionWhenRateIsNegative() throws IllegalArgumentException {
         Assertions.assertThrows(IllegalArgumentException.class, () -> {
@@ -51,59 +45,160 @@ public class CreditAccountTest {
         });
     }
 
+    /*
+    Метод pay
+    */
+
+    // Успешная оплата. Покупка меньше баланса и меньше лимита.
     @Test
-    public void shouldReturnTrueWhenAmountMoreBalanceAndLessCreditLimit() {
+    public void successfulPaymentAmountLessThanBalanceAndLimit() {
         CreditAccount account = new CreditAccount(
                 1_000,
                 5_000,
                 15
         );
 
-        Assertions.assertTrue(account.pay(2000));
+        account.pay(500);
+
+        Assertions.assertEquals(500, account.getBalance());
     }
 
+    // Успешная оплата. Покупка равна балансу, но меньше лимита.
     @Test
-    public void shouldReturnTrueWhenAmountLessBalance() {
+    public void successfulPaymentAmountEqualBalanceAndLessLimit() {
         CreditAccount account = new CreditAccount(
                 1_000,
                 5_000,
                 15
         );
 
-        Assertions.assertTrue(account.pay(700));
+        account.pay(1_000);
+
+        Assertions.assertEquals(0, account.getBalance());
     }
 
+    // Успешная оплата. Покупка больше баланса, но меньше лимита.
     @Test
-    public void shouldReturnTrueWhenAmountLessBalancePlusCreditLimit() {
+    public void successfulPaymentAmountMoreBalanceAndLessLimit() {
         CreditAccount account = new CreditAccount(
                 1_000,
                 5_000,
                 15
         );
 
-        Assertions.assertTrue(account.pay(5800));
+        account.pay(1_500);
+
+        Assertions.assertEquals(-500, account.getBalance());
     }
 
+    // Успешная оплата. Покупка меньше баланса, но равна лимиту.
     @Test
-    public void shouldReturnFalseWhenAmountMoreBalancePlusCreditLimit() {
+    public void successfulPaymentAmountLessBalanceAndEqualLimit() {
         CreditAccount account = new CreditAccount(
                 1_000,
                 5_000,
                 15
         );
 
-        System.out.println(account.getBalance());
+        account.pay(6_000);
 
-        Assertions.assertFalse(account.pay(7000));
+        Assertions.assertEquals(-5_000, account.getBalance());
     }
 
-    //Todo: добавить тесты на ожидаемый баланс после покупки.
+    // Оплата не возможна. Покупка больше баланса и больше лимита.
+    @Test
+    public void unsuccessfulPaymentAmountMoreBalanceAndMoreLimit() {
+        CreditAccount account = new CreditAccount(
+                1_000,
+                5_000,
+                15
+        );
 
+        Assertions.assertFalse(account.pay(8_000));
+    }
 
+    /*
+    Метод add
+    */
 
+    // Успешное пополнение счета, если начальный баланс равен нулю.
+    @Test
+    public void shouldAddToPositiveBalanceIfInitialBalanceIsNull() {
+        CreditAccount account = new CreditAccount(
+                0,
+                5_000,
+                15
+        );
 
+        account.add(3_000);
 
+        Assertions.assertEquals(3_000, account.getBalance());
+    }
 
+    // Успешное пополнение счета, если на балансе есть любая положительная сумма.
+    @Test
+    public void shouldAddToPositiveBalanceIfInitialBalanceIsPositive() {
+        CreditAccount account = new CreditAccount(
+                8_000,
+                5_000,
+                15
+        );
 
+        account.add(2_000);
+
+        Assertions.assertEquals(10_000, account.getBalance());
+    }
+
+    // Пополнение невозможно. Сумма пополнения отрицательна.
+    @Test
+    public void shouldNotAddToPositiveBalanceIfAmountIsNegative() {
+        CreditAccount account = new CreditAccount(
+                8_000,
+                5_000,
+                15
+        );
+
+        Assertions.assertFalse(account.add(-2_000));
+    }
+
+    /*
+    Метод yearChange
+     */
+
+    // Успешное вычисление процентов на отрицательный баланс счёта.
+    @Test
+    public void shouldCalculatePercentOnNegativeBalance() {
+        CreditAccount account = new CreditAccount(
+                -32_750,
+                12_000,
+                13
+        );
+
+        Assertions.assertEquals(-4_258, account.yearChange());
+    }
+
+    // Проценты не начисляются если на балансе счета null.
+    @Test
+    public void shouldNotCalculatePercentOnNullBalance() {
+        CreditAccount account = new CreditAccount(
+                0,
+                12_000,
+                13
+        );
+
+        Assertions.assertEquals(0, account.yearChange());
+    }
+
+    // Проценты не начисляются на положительный баланс счёта.
+    @Test
+    public void shouldNotCalculatePercentOnPositiveBalance() {
+        CreditAccount account = new CreditAccount(
+                32_750,
+                12_000,
+                13
+        );
+
+        Assertions.assertEquals(0, account.yearChange());
+    }
 
 }
