@@ -91,7 +91,7 @@ public class CreditAccountTest {
         Assertions.assertEquals(-1_000, account.getBalance());
     }
 
-    // Успешная оплата. Покупка меньше баланса, но равна лимиту.
+    // Успешная оплата. Покупка больше баланса, но равна лимиту.
     @Test
     public void successfulPaymentAmountLessBalanceAndEqualLimit() {
         CreditAccount account = new CreditAccount(
