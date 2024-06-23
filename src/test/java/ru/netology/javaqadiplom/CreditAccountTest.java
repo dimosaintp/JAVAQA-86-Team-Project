@@ -86,9 +86,9 @@ public class CreditAccountTest {
                 15
         );
 
-        account.pay(1_500);
+        account.pay(2_000);
 
-        Assertions.assertEquals(-500, account.getBalance());
+        Assertions.assertEquals(-1_000, account.getBalance());
     }
 
     // Успешная оплата. Покупка меньше баланса, но равна лимиту.
@@ -100,9 +100,9 @@ public class CreditAccountTest {
                 15
         );
 
-        account.pay(6_000);
+        account.pay(5_000);
 
-        Assertions.assertEquals(-5_000, account.getBalance());
+        Assertions.assertEquals(-4_000, account.getBalance());
     }
 
     // Оплата не возможна. Покупка больше баланса и больше лимита.
@@ -114,7 +114,9 @@ public class CreditAccountTest {
                 15
         );
 
-        Assertions.assertFalse(account.pay(8_000));
+        account.pay(8_000);
+
+        Assertions.assertEquals(1_000, account.getBalance());
     }
 
     /*
