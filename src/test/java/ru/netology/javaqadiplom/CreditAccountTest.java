@@ -93,7 +93,7 @@ public class CreditAccountTest {
 
     // Успешная оплата. Покупка больше баланса, но равна лимиту.
     @Test
-    public void successfulPaymentAmountLessBalanceAndEqualLimit() {
+    public void successfulPaymentAmountMoreBalanceAndEqualLimit() {
         CreditAccount account = new CreditAccount(
                 1_000,
                 5_000,
