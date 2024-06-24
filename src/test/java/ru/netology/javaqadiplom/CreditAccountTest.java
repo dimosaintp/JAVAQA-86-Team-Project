@@ -45,6 +45,18 @@ public class CreditAccountTest {
         });
     }
 
+    // Должно выкидываться исключение при создании счета с балансом больше, чем кредитный лимит.
+    @Test
+    public void shouldShowExceptionWhenInitialBalanceMoreThanCreditLimit() throws IllegalArgumentException {
+        Assertions.assertThrows(IllegalArgumentException.class, () -> {
+            CreditAccount account = new CreditAccount(
+                    6_000,
+                    5_000,
+                    15
+            );
+        });
+    }
+
     /*
     Метод pay
     */
@@ -119,6 +131,20 @@ public class CreditAccountTest {
         Assertions.assertEquals(1_000, account.getBalance());
     }
 
+    // Оплата не возможна. Сумма покупки отрицательна.
+    @Test
+    public void unsuccessfulPaymentAmountIsNegative() {
+        CreditAccount account = new CreditAccount(
+                1_000,
+                5_000,
+                15
+        );
+
+        account.pay(-1_000);
+
+        Assertions.assertEquals(1_000, account.getBalance());
+    }
+
     /*
     Метод add
     */
@@ -141,21 +167,21 @@ public class CreditAccountTest {
     @Test
     public void shouldAddToPositiveBalanceIfInitialBalanceIsPositive() {
         CreditAccount account = new CreditAccount(
-                8_000,
+                1_000,
                 5_000,
                 15
         );
 
         account.add(2_000);
 
-        Assertions.assertEquals(10_000, account.getBalance());
+        Assertions.assertEquals(3_000, account.getBalance());
     }
 
     // Пополнение невозможно. Сумма пополнения отрицательна.
     @Test
     public void shouldNotAddToPositiveBalanceIfAmountIsNegative() {
         CreditAccount account = new CreditAccount(
-                8_000,
+                1_000,
                 5_000,
                 15
         );
@@ -202,7 +228,7 @@ public class CreditAccountTest {
                 15
         );
 
-        Assertions.assertEquals(0, account.yearChange());
+        Assertions.assertEquals(1000, account.yearChange());
     }
 
 }
