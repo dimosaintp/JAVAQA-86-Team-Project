@@ -171,12 +171,14 @@ public class CreditAccountTest {
     @Test
     public void shouldCalculatePercentOnNegativeBalance() {
         CreditAccount account = new CreditAccount(
-                -32_750,
-                12_000,
-                13
+                0,
+                5_000,
+                15
         );
 
-        Assertions.assertEquals(-4_258, account.yearChange());
+        account.pay(2_000);
+
+        Assertions.assertEquals(-2_300, account.yearChange());
     }
 
     // Проценты не начисляются если на балансе счета null.
@@ -195,9 +197,9 @@ public class CreditAccountTest {
     @Test
     public void shouldNotCalculatePercentOnPositiveBalance() {
         CreditAccount account = new CreditAccount(
-                32_750,
-                12_000,
-                13
+                1_000,
+                5_000,
+                15
         );
 
         Assertions.assertEquals(0, account.yearChange());
