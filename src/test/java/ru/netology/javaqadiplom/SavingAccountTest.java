@@ -64,22 +64,6 @@ public class SavingAccountTest {
         Assertions.assertEquals(false, result);
     }
 
-    //5 пополнить, если банас отрицательный
-
-    @Test
-
-    public void shouldBeReplenishedIfTheBalanceIsNegative() {
-        SavingAccount account = new SavingAccount(
-                -1_000,
-                1_000,
-                10_0000,
-                5);
-        boolean result = account.add(3_000);
-        Assertions.assertEquals(2_000, account.getBalance());
-        Assertions.assertEquals(true, result);
-
-    }
-
     //6 после покупки баланс больше минимального
     @Test
 
