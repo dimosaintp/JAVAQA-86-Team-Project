@@ -191,7 +191,6 @@ public class CreditAccountTest {
         );
 
         account.pay(2_000);
-        System.out.println(account.yearChange());
 
         Assertions.assertEquals(-300, account.yearChange());
     }
