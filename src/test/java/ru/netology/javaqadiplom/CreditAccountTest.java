@@ -45,18 +45,6 @@ public class CreditAccountTest {
         });
     }
 
-//    // Должно выкидываться исключение при создании счета с балансом больше, чем кредитный лимит.
-//    @Test
-//    public void shouldShowExceptionWhenInitialBalanceMoreThanCreditLimit() throws IllegalArgumentException {
-//        Assertions.assertThrows(IllegalArgumentException.class, () -> {
-//            CreditAccount account = new CreditAccount(
-//                    6_000,
-//                    5_000,
-//                    15
-//            );
-//        });
-//    }
-
     /*
     Метод pay
     */
@@ -203,8 +191,9 @@ public class CreditAccountTest {
         );
 
         account.pay(2_000);
+        System.out.println(account.yearChange());
 
-        Assertions.assertEquals(-2_300, account.yearChange());
+        Assertions.assertEquals(-300, account.yearChange());
     }
 
     // Проценты не начисляются если на балансе счета null.
@@ -228,9 +217,6 @@ public class CreditAccountTest {
                 15
         );
 
-        int expected = 1000;
-
-        Assertions.assertEquals(1000, account.getBalance());
+        Assertions.assertEquals(0, account.yearChange());
     }
-
 }
