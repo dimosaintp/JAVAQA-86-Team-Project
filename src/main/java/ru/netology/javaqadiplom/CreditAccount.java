@@ -101,7 +101,7 @@ public class CreditAccount extends Account {
         if (balance < 0) {
             return (balance * rate) / 100;
         } else {
-            return 0 + balance;
+            return 0;
         }
     }
 
