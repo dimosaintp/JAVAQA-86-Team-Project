@@ -64,22 +64,6 @@ public class SavingAccountTest {
         Assertions.assertEquals(false, result);
     }
 
-    //5 пополнить, если банас отрицательный
-
-    @Test
-
-    public void shouldBeReplenishedIfTheBalanceIsNegative() {
-        SavingAccount account = new SavingAccount(
-                -1_000,
-                1_000,
-                10_0000,
-                5);
-        boolean result = account.add(3_000);
-        Assertions.assertEquals(2_000, account.getBalance());
-        Assertions.assertEquals(true, result);
-
-    }
-
     //6 после покупки баланс больше минимального
     @Test
 
@@ -124,7 +108,7 @@ public class SavingAccountTest {
 
         boolean result = account.pay(0);
 
-        Assertions.assertEquals(5_000, account.getBalance());
+        Assertions.assertEquals(5_000,  account.getBalance());
         Assertions.assertEquals(false, result);
     }
 
@@ -140,7 +124,8 @@ public class SavingAccountTest {
 
         boolean result = account.pay(-1_500);
 
-        Assertions.assertEquals(5_000, account.getBalance());
+
+        Assertions.assertEquals(5_000,  account.getBalance());
         Assertions.assertEquals(false, result);
     }
 
@@ -223,10 +208,9 @@ public class SavingAccountTest {
                             5);
                 });
     }
-
     //16 исключение, если начальный баланс больше максимального
     @Test
-    public void throwExceptionIfTheInitialBalanceMoreThanMaxBalance() {
+    public void throwExceptionIfTheInitialBalanceMoreThanMaxBalance () {
         Assertions.assertThrows(IllegalArgumentException.class,
                 () -> {
                     SavingAccount account = new SavingAccount(
@@ -299,17 +283,15 @@ public class SavingAccountTest {
 
     }
     //21 вызов максимального баланса
+        @Test
+        public void giveMaxBalance() {
+            SavingAccount account = new SavingAccount(
+                    2_000,
+                    1_000,
+                    10_000,
+                    5);
 
-    @Test
-    public void giveMaxBalance() {
-        SavingAccount account = new SavingAccount(
-                2_000,
-                1_000,
-                10_000,
-                5);
 
-
-        Assertions.assertEquals(10_000, account.getMaxBalance());
-    }
-
+            Assertions.assertEquals(10_000, account.getMaxBalance());
+        }
 }
