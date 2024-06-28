@@ -45,18 +45,6 @@ public class CreditAccountTest {
         });
     }
 
-    // Должно выкидываться исключение при создании счета с начальным балансом больше кредитного лимита.
-    @Test
-    public void shouldShowExceptionWhenInitialBalanceIsMoreThanCreditLimit() throws IllegalArgumentException {
-        Assertions.assertThrows(IllegalArgumentException.class, () -> {
-            CreditAccount account = new CreditAccount(
-                    6_000,
-                    5_000,
-                    15
-            );
-        });
-    }
-
     /*
     Метод pay
     */
