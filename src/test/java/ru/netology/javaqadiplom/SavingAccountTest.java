@@ -111,7 +111,8 @@ public class SavingAccountTest {
         Assertions.assertEquals(5_000,  account.getBalance());
         Assertions.assertEquals(false, result);
     }
-   //9 покупка на отрицательную сумму
+
+    //9 покупка на отрицательную сумму
     @Test
 
     public void purchaseAmountIsNegative() {
@@ -122,6 +123,7 @@ public class SavingAccountTest {
                 5);
 
         boolean result = account.pay(-1_500);
+
 
         Assertions.assertEquals(5_000,  account.getBalance());
         Assertions.assertEquals(false, result);
@@ -143,20 +145,21 @@ public class SavingAccountTest {
 
     //11 исключение отрицательного начального баланса
     @Test
-    public void throwExceptionIfTheInitialBalanceIsNegative () {
+    public void throwExceptionIfTheInitialBalanceIsNegative() {
         Assertions.assertThrows(IllegalArgumentException.class,
                 () -> {
-            SavingAccount account = new SavingAccount(
-                    -1000,
-                    1_000,
-                    10_000,
-                    5);
-            System.out.println(account.getBalance());
-        }  );
+                    SavingAccount account = new SavingAccount(
+                            -1000,
+                            1_000,
+                            10_000,
+                            5);
+                    System.out.println(account.getBalance());
+                });
     }
+
     //12 исключение отрицательной ставки
     @Test
-    public void throwExceptionIfTheRateIsNegative () {
+    public void throwExceptionIfTheRateIsNegative() {
         Assertions.assertThrows(IllegalArgumentException.class,
                 () -> {
                     SavingAccount account = new SavingAccount(
@@ -164,12 +167,12 @@ public class SavingAccountTest {
                             1_000,
                             10_000,
                             -5);
-                }  );
+                });
     }
 
     //13 исключение отрицвтельного минимального баланса
     @Test
-    public void throwExceptionIfTheMinBalanceIsNegative () {
+    public void throwExceptionIfTheMinBalanceIsNegative() {
         Assertions.assertThrows(IllegalArgumentException.class,
                 () -> {
                     SavingAccount account = new SavingAccount(
@@ -177,12 +180,12 @@ public class SavingAccountTest {
                             -500,
                             10_000,
                             5);
-                }  );
+                });
     }
 
     //14 исключение, если макс баланс меньше минимального
     @Test
-    public void throwExceptionIfTheMaxBalanceLessThanMinBalance () {
+    public void throwExceptionIfTheMaxBalanceLessThanMinBalance() {
         Assertions.assertThrows(IllegalArgumentException.class,
                 () -> {
                     SavingAccount account = new SavingAccount(
@@ -190,12 +193,12 @@ public class SavingAccountTest {
                             10_000,
                             1_000,
                             5);
-                }  );
+                });
     }
 
     //15 исключение, если начальный баланс меньше минимального
     @Test
-    public void throwExceptionIfTheInitialBalanceLessThanMinBalance () {
+    public void throwExceptionIfTheInitialBalanceLessThanMinBalance() {
         Assertions.assertThrows(IllegalArgumentException.class,
                 () -> {
                     SavingAccount account = new SavingAccount(
@@ -203,7 +206,7 @@ public class SavingAccountTest {
                             1_000,
                             10_000,
                             5);
-                }  );
+                });
     }
     //16 исключение, если начальный баланс больше максимального
     @Test
@@ -215,7 +218,7 @@ public class SavingAccountTest {
                             1_000,
                             10_000,
                             5);
-                }  );
+                });
     }
 
     // 17 после покупки баланс равен минимальному
@@ -280,7 +283,6 @@ public class SavingAccountTest {
 
     }
     //21 вызов максимального баланса
-
         @Test
         public void giveMaxBalance() {
             SavingAccount account = new SavingAccount(
@@ -292,5 +294,4 @@ public class SavingAccountTest {
 
             Assertions.assertEquals(10_000, account.getMaxBalance());
         }
-
 }
