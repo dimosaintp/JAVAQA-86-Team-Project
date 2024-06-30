@@ -14,21 +14,19 @@ public class Bank {
      * @return - true если операция прошла успешно, false иначе
      */
 
-    //Todo: учитывать кредитный лимит или нет?
 
     public boolean transfer(Account from, Account to, int amount) {
         if (amount <= 0) {
             return false;
         }
-        if (from.getBalance() < amount) {
-            return false;
-        }
         if (from.pay(amount)) {
+            from.add(amount);
             if (to.add(amount)) {
+                to.pay(amount);
+
+                from.pay(amount);
+                to.add(amount);
                 return true;
-            } else {
-                from.add(amount);
-                return false;
             }
         }
         return false;
