@@ -8,25 +8,32 @@ public class Bank {
      * уменьшиться на эту сумму, а баланс счёта to увеличиться.
      * Если операция прошла неуспешно, балансы обоих счетов никак
      * измениться не должны.
-     * @param from - счёт с которого переводим
-     * @param to - счёт на который переводим
+     *
+     * @param from   - счёт с которого переводим
+     * @param to     - счёт на который переводим
      * @param amount - сумма перевода
      * @return - true если операция прошла успешно, false иначе
      */
 
-
     public boolean transfer(Account from, Account to, int amount) {
+        // Проверяем, что сумма не отрицательная и не равна нулю.
         if (amount <= 0) {
             return false;
         }
-        if (from.pay(amount)) {
-            from.add(amount);
-            if (to.add(amount)) {
-                to.pay(amount);
-
-                from.pay(amount);
-                to.add(amount);
-                return true;
+        // Проверяем, что balance CreditAccount минус amount не опускается ниже -creditLimit.
+        {
+            if (from.getBalance() - amount < -from.getCreditLimit()) {
+                return false;
+            }
+            //Операция перевода учитывает кредитный лимит.
+            {
+                if (from.pay(amount)) {
+                    if (to.add(amount)) {
+                        return true;
+                    } else {
+                        from.add(amount); // Если from.pay не завершается true, мы откатываем её from.add(amount);
+                    }
+                }
             }
         }
         return false;
