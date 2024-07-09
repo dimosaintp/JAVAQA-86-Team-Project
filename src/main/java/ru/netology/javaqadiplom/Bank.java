@@ -20,21 +20,15 @@ public class Bank {
         if (amount <= 0) {
             return false;
         }
-        // Проверяем, что balance CreditAccount минус amount не опускается ниже -creditLimit.
-        {
-            if (from.getBalance() - amount < -from.getCreditLimit()) {
-                return false;
-            }
-            //Операция перевода учитывает кредитный лимит.
-            {
-                if (from.pay(amount)) {
-                    if (to.add(amount)) {
-                        return true;
-                    } else {
-                        from.add(amount); // Если from.pay не завершается true, мы откатываем её from.add(amount);
-                    }
-                }
-            }
+        // Если списание невозможно, откатываем перевод.
+        if (!from.pay(amount)) {
+            return false;
+        }
+        // Переводим средства.
+        if (to.add(amount)) {
+            return true;
+        } else {
+            from.add(amount); // Если from.pay не завершается true, мы откатываем её from.add(amount);
         }
         return false;
     }

@@ -27,8 +27,4 @@ public class Account {
     public void setRate(int rate) {
         this.rate = rate;
     }
-
-    public int getCreditLimit() {
-        return 0;
-    }
 }
